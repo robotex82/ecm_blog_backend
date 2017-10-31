@@ -13,7 +13,11 @@ module Ecm
         private
 
         def collection_scope
-          super.order(updated_at: :desc)
+          super.friendly.order(updated_at: :desc)
+        end
+
+        def load_scope
+          super.friendly
         end
 
         def permitted_params
