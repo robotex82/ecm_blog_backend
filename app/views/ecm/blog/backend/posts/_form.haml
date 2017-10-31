@@ -1,0 +1,5 @@
+= form.association :creator, collection: Ecm::Blog.creator_class_name.constantize.all, label_method: Ecm::Blog::Backend.creator_label_method
+= form.input :title
+= form.input :body, input_html: { 'data-add-editor': Itsf::Backend.features?(:'ace-rails-ap') } #, 'data-editor-syntax': form.object.handler }
+= form.input :published, as: :boolean
+= form.input :tag_list

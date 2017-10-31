@@ -1,0 +1,9 @@
+= table.row :title
+= table.row(:tags) do |resource|
+  = tag_labels_for(resource)
+= table.row :body
+= table.row :published_at
+= table.row :creator, as: :association
+= table.row :updater, as: :association
+= table.row :created_at
+= table.row :updated_at
