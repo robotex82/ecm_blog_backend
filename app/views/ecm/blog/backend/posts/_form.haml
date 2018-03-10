@@ -1,4 +1,12 @@
-= form.association :creator, collection: Ecm::Blog.creator_class_name.constantize.all, label_method: Ecm::Blog::Backend.creator_label_method
+.bottom-margin-1
+  %b= Ecm::Blog::Post.human_attribute_name(:creator)
+  %br
+  - case Ecm::Blog::Backend.creator_label_method
+  - when Symbol, String
+    = form.object.creator.send(Ecm::Blog::Backend.creator_label_method)
+  - when Proc
+    = Ecm::Blog::Backend.creator_label_method.call(form.object.creator)
+
 = form.input :title
 = form.input :body, input_html: { 'data-add-editor': Itsf::Backend.features?(:'ace-rails-ap') } #, 'data-editor-syntax': form.object.handler }
 = form.input :published, as: :boolean

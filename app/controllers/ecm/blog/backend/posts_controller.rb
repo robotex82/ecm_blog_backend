@@ -2,7 +2,8 @@ module Ecm
   module Blog
     module Backend
       class PostsController < Itsf::Backend::Resource::BaseController
-        include Controller::ActsAsPublishedConcern
+        include ResourcesController::ActsAsPublishedConcern
+        include ResourcesController::FriendlyIdConcern
 
         helper Ecm::Tags::Backend::ApplicationHelper
         
@@ -12,16 +13,26 @@ module Ecm
 
         private
 
-        def collection_scope
+        def initialize_resource
+          super
+          @resource.creator = current_user
+        end
+
+        def initialize_resource_for_create
+          super
+          @resource.creator = current_user
+        end
+
+        def load_collection_scope
           super.friendly.order(updated_at: :desc)
         end
 
-        def load_scope
+        def load_resource_scope
           super.friendly
         end
 
         def permitted_params
-          params.require(:post).permit(:created_by_id, :title, :body, :published, :tag_list)
+          params.require(:post).permit(:title, :body, :published, :tag_list)
         end
       end
     end
