@@ -32,7 +32,7 @@ module Ecm
         end
 
         def permitted_params
-          params.require(:post).permit(:title, :body, :published, :tag_list)
+          params.require(:post).permit(:title, :body, :published, :tag_list, assets: [])
         end
       end
     end
