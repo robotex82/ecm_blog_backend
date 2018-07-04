@@ -3,5 +3,5 @@
 = table.column :asset_details_count
 = table.association :creator, label_method: ->(r) { r.try_all(*Itsf::Backend.resource_title_methods) }
 = table.association :updater, label_method: ->(r) { r.try_all(*Itsf::Backend.resource_title_methods) }
-= table.timestamps format: :short, sort: true
+= table.timestamps sort: true
 = table.acts_as_published_actions
