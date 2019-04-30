@@ -11,3 +11,4 @@
 = form.input :body, input_html: { 'data-add-editor': Itsf::Backend.features?(:'ace-rails-ap') } #, 'data-editor-syntax': form.object.handler }
 = form.input :published, as: :boolean
 = form.input :tag_list
+= form.input :assets, as: :file, input_html: { multiple: true }

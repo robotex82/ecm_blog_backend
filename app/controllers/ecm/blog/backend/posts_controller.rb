@@ -2,10 +2,14 @@ module Ecm
   module Blog
     module Backend
       class PostsController < Itsf::Backend::Resource::BaseController
+        include ResourcesController::ActsAsListConcern
         include ResourcesController::ActsAsPublishedConcern
         include ResourcesController::FriendlyIdConcern
 
         helper Ecm::Tags::Backend::ApplicationHelper
+
+        include Rao::Query::Controller::QueryConcern
+        view_helper Rao::Query::ApplicationHelper, as: :query_helper
         
         def self.resource_class
           Ecm::Blog::Post
@@ -24,7 +28,8 @@ module Ecm
         end
 
         def load_collection_scope
-          super.friendly.order(updated_at: :desc)
+          scope = super.friendly
+          with_conditions_from_query(scope)
         end
 
         def load_resource_scope
@@ -32,7 +37,7 @@ module Ecm
         end
 
         def permitted_params
-          params.require(:post).permit(:title, :body, :published, :tag_list)
+          params.require(:post).permit(:title, :body, :published, :tag_list, assets: [])
         end
       end
     end
